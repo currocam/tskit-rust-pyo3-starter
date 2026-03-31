@@ -12,3 +12,12 @@ def test_sim_haploid_wright_fisher_returns_tree_sequence():
     assert isinstance(ts, tskit.TreeSequence)
     assert ts.num_samples == 100
     assert ts.sequence_length == 1.0
+
+    # Check optional arguments works
+    ts = tskit_maturin_starter.sim_haploid_wright_fisher(
+        population_size=100,
+        num_generations=10,
+    )
+    assert isinstance(ts, tskit.TreeSequence)
+    assert ts.num_samples == 100
+    assert ts.sequence_length == 1.0

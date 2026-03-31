@@ -39,13 +39,16 @@ mod tskit_maturin_starter {
 
     /// Run a haploid Wright-Fisher simulation
     #[pyfunction]
+    #[pyo3(signature = (population_size, num_generations, random_seed=None, simplify_interval=None))]
     pub fn sim_haploid_wright_fisher(
         py: Python<'_>,
         population_size: usize,
         num_generations: usize,
-        random_seed: u64,
-        simplify_interval: usize,
+        random_seed: Option<u64>,
+        simplify_interval: Option<usize>,
     ) -> PyResult<Py<PyAny>> {
+        let random_seed = random_seed.unwrap_or_else(|| rand::random());
+        let simplify_interval = simplify_interval.unwrap_or(1);
         let tables = haploid_wright_fisher::simulate(
             random_seed,
             population_size,
