@@ -51,7 +51,6 @@ pub fn table_collection_into_python_tree_sequence(
     let py_tc = tskit_mod
         .getattr("TableCollection")?
         .call((), Some(&kwargs))?;
-    // This assumes the table collection is already sorted
     py_tc.call_method0("sort")?;
     let ts = py_tc.call_method0("tree_sequence")?;
     Ok(ts.unbind())
